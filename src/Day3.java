@@ -1,20 +1,7 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class ThridDay {
-
-    public static void main (String[] args) {
-        try {
-            List<String> allLines = Files.readAllLines(Paths.get("/Users/lasse/Documents/Sammler/Code/AdventOfCode/src/input3.txt"));
-            System.out.println("Your score would be: " + getScore(allLines));
-            System.out.println("Your score would be: " + getGroupScore(allLines));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+public class Day3 {
 
     public static int getGroupScore(List<String> allLines) {
 
@@ -52,7 +39,7 @@ public class ThridDay {
     }
 
     public static int getScore(List<String> allLines) {
-        boolean buckets[];
+        boolean[] buckets;
         int score = 0;
 
         for(String line : allLines) {

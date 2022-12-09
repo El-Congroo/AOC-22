@@ -1,21 +1,10 @@
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class FirstDay {
-
-    public static void main (String args[]) {
-        try {
-            List<String> allLines = Files.readAllLines(Paths.get("/Users/lasse/Documents/Sammler/Code/AdventOfCode/src/input1.txt"));
-
-            System.out.println("Gesamt: " + getMax(allLines));
-            System.out.println("Summe von den 3 höchsten: " + get3Max(allLines));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+public class Day1 {
 
     private static int get3Max(List<String> allLines) {
         int[] max = {0, 0, 0};
