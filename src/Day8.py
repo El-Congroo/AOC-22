@@ -74,5 +74,5 @@ for row in visible:
         if column:
             count += 1
 
-print(count)
-print (np.max(estate_value))
+print("Result task one: ", count)
+print ("Result of the second tastk: ", np.max(estate_value))
