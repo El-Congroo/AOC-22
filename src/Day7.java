@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public class Day7 {
 
     public static int getScore(List<String> allLines) {
-        int size = 0;
         Folder cur, root;
         LinkedList<Folder> path = new LinkedList<>();
         root = new Folder("/");
@@ -94,7 +93,6 @@ class Folder {
 
         if(getSize() <= 100_000)
             sum += getSize();
-
 
         return sum;
     }
