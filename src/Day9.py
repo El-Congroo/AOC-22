@@ -2,7 +2,8 @@ import numpy as np
 
 
 with open('data/input9.txt') as f:
-    content = f.readlines()
+    content = [line.strip().split(" ") for line in f.readlines()]
+
 
 directions = {
     'L' : np.array([-1,  0]),
@@ -18,8 +19,7 @@ knots = []
 for i in range(10):
     knots.append(np.array([0, 0]))
 
-visited = set()
-slungThere = set()
+visited, slungThere = set(), set()
 
 
 ##############
@@ -34,27 +34,24 @@ def next(posH, posT):
             return posT
         case 3 | 4: 
             return posT + np.sign(posH-posT)
-
     return posT
 
-for line in content:
-    line = line.strip().split(" ")
-    for i in range(int(line[1])):
-        posH += directions[line[0]]
+for direction, steps in content:
+    for _ in range(int(steps)):
+        posH += directions[direction]
         posT = next(posH, posT)
         visited.add(tuple(posT))
-
+    
 
 ##############
 ### Part 2 ###
 ##############
 
-for line in content:
-    line = line.strip().split(" ")
-    for i in range(int(line[1])):
-        knots[0] += directions[line[0]]
-        for j in range(1, 10):
-            knots[j] = next(knots[j-1], knots[j])
+for direction, steps in content:
+    for _ in range(int(steps)):
+        knots[0] += directions[direction]
+        for j in range(len(knots) - 1):
+            knots[j+1] = next(knots[j], knots[j+1])
         slungThere.add(tuple(knots[9]))
 
 

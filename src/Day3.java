@@ -7,24 +7,21 @@ public class Day3 {
 
         boolean[] buckets = new boolean[52];
         boolean[] filter = new boolean[52];
+
         Arrays.fill(buckets, true);
         int counter = 0, score = 0;
 
         for(String line : allLines) {
-
-
             for(int i=0; i<line.length(); i++)
                 filter[getValue(line, i) - 1] = true;
 
-            for(int i=0; i<52; i++) {
+            for(int i=0; i<52; i++)
                 buckets[i] = buckets[i] && filter[i];
-            }
 
             if(++counter == 3) {
                 for(int i = 0; i<buckets.length; i++)
                     if(buckets[i])
                         score += i + 1;
-
 
                 Arrays.fill(buckets, true);
                 counter = 0;

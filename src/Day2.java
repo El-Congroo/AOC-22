@@ -2,32 +2,7 @@ import java.util.List;
 
 public class Day2 {
 
-    private static int getScore2(List<String> allLines) {
-        int scoreSum = 0;
-        for(String line : allLines) {
-            scoreSum += singleScore2(line);
-            scoreSum += winDrawLose2(line);
-        }
-
-        return scoreSum;
-    }
-
-    private static int winDrawLose2(String line) {
-        return (line.charAt(2)-88) * 3;
-    }
-
-    private static int singleScore2(String line) {
-        int he = line.charAt(0)-65,
-                should = line.charAt(2)-88;
-
-        int[][] ret = {
-                {3, 1, 2},
-                {1, 2, 3},
-                {2, 3, 1}
-        };
-
-        return ret[he][should];
-    }
+   
 
 
     private static int getScore(List<String> allLines) {
@@ -60,4 +35,35 @@ public class Day2 {
         return line.charAt(2)-87;
     }
 
+
+    
+
+    private static int getScore2(List<String> allLines) {
+        int scoreSum = 0;
+        for(String line : allLines) {
+            scoreSum += singleScore2(line);
+            scoreSum += winDrawLose2(line);
+        }
+
+        return scoreSum;
+    }
+
+    private static int winDrawLose2(String line) {
+        return (line.charAt(2)-88) * 3;
+    }
+
+    private static int singleScore2(String line) {
+        int he = line.charAt(0)-65,
+                should = line.charAt(2)-88;
+
+        int[][] ret = {
+                {3, 1, 2},
+                {1, 2, 3},
+                {2, 3, 1}
+        };
+
+        return ret[he][should];
+    }
+
 }
+
