@@ -3,7 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class DayExecuter extends Day7 {
+public class DayExecuter extends Day07 {
 
     public static void main (String[] args) {
 

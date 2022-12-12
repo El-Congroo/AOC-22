@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Day7 {
+public class Day07 {
 
     public static int getScore(List<String> allLines) {
         Folder cur, root;

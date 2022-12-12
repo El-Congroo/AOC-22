@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 
-public class Day3 {
+public class Day03 {
 
     public static int getGroupScore(List<String> allLines) {
 

@@ -3,6 +3,7 @@ import copy as cp
 #################
 ### read data ###
 #################
+
 #read file
 with open('data/input5.txt') as f:
     content = f.readlines()
@@ -30,7 +31,6 @@ move = []
 for i in range(idx, len(content)):
     move.append([x-1 for x in list(map(int, content[i].split()[1::2]))])
 
-#substract 1 from all elements in move
 
 ##########################
 ### algorithm part one ###

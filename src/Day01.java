@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Day1 {
+public class Day01 {
 
     private static int get3Max(List<String> allLines) {
         int[] max = {0, 0, 0};
