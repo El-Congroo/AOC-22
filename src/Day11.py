@@ -1,5 +1,6 @@
-monkeys = []
+import math
 
+monkeys = []
 
 class Monkey:
 
@@ -26,13 +27,13 @@ class Monkey:
         return self.inspect
 
     def test(self):
+        self.items[0] %= kgv
         return self.items[0] % self.divisibleBy == 0
 
     def throw(self):
         i = 1
         if self.test():
             i = 0
-
         return (self.throwsTo[i], self.items.pop(0))
 
     def catch(self, item):
@@ -40,7 +41,7 @@ class Monkey:
 
 
 
-with open('data/sample.txt') as f:
+with open('data/input11.txt') as f:
     content = [line.strip().replace(' ', '') for line in f.readlines()]
 
 
@@ -57,8 +58,16 @@ for i in range(content.count('')+1):
 
 
 # run monkeys
-
 round = 10000
+
+kgv = 1
+# find kgv
+for monkey in monkeys:
+    kgv = math.lcm(kgv, monkey.divisibleBy)
+
+print("kgv", kgv)
+
+
 
 for i in range(round):
     for monkey in monkeys:
@@ -68,18 +77,13 @@ for i in range(round):
             catcher, item = monkey.throw()
             monkeys[catcher].catch(item)
 
-    if i % 100 == 0:
-        print(i)
-
-
 
 activity = []
 for monkey in monkeys:
     activity.append(monkey.getActive())
-    print(activity)
 
 
-    print(f"== After round {round} ==")
+print(f"== After round {round} ==")
 for i in range(len(activity)):
     print(f"Monkey {i} inspected items {activity[i]} times")
 
