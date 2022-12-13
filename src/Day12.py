@@ -2,9 +2,6 @@
 with open('data/input12.txt') as f:
     grid = [[ord(c)-97 for c in line.strip()] for line in f.readlines()]
 
-# set up variables
-
-
 #################
 ### Algorithm ###
 #################

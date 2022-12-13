@@ -73,7 +73,7 @@ for i in range(round):
     for monkey in monkeys:
         for j in range(monkey.numberItems()):
             monkey.operate()
-            #monkey.bored()
+            # monkey.bored()
             catcher, item = monkey.throw()
             monkeys[catcher].catch(item)
 

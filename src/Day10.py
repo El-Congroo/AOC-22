@@ -24,22 +24,9 @@ for line in content:
         if (cycle % 40) - 20 == 0:
             sum += value * cycle
 
-
         # addx number
         if i == 1:
             value += int(line[1])
 
 
-    
-
-        
-        
-
-
-
-
-
-
 print(sum)
-
-

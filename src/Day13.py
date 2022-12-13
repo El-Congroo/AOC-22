@@ -28,7 +28,7 @@ def difference(a, b):
         return difference(a, [b])
     elif isinstance(a, int) and isinstance(b, list):
         return difference([a], b)
-    
+
 ################
 ### part one ###
 ################
@@ -63,6 +63,6 @@ for i in range(len(lists)):
 
 score = 1
 for i in key_elements:
-    score *= lists.index(i) +1
+    score *= lists.index(i) + 1
 
 print("The answer to live and everything and part two is", score)
