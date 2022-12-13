@@ -8,7 +8,7 @@ public class DayExecuter extends Day07 {
     public static void main (String[] args) {
 
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("data/input7.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("data/input07.txt"));
             System.out.println("Your score would be: " + getScore(allLines));
         } catch (IOException e) {
             e.printStackTrace();
