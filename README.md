@@ -1,6 +1,6 @@
 # Advent Of Code
 
-Here are my solutions for the Advent of Code puzzles
+Here are my solutions for the Advent of Code puzzles.
 Currently working on 2022. After that I want to solve all the years before 🤪
 
 
