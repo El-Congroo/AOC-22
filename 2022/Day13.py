@@ -1,7 +1,11 @@
 import ast
 
+#################
 ### read file ###
-with open('data/input13.txt') as f:
+#################
+
+
+with open('data/2022/input13.txt') as f:
     lists = [line.strip() for line in f.readlines()]
 
 while '' in lists:
@@ -10,6 +14,9 @@ while '' in lists:
 for i in range(len(lists)):
     lists[i] = ast.literal_eval(lists[i])
 
+#################
+### algorithm ###
+#################
 
 def difference(a, b):
     if isinstance(a, list) and isinstance(b, list):

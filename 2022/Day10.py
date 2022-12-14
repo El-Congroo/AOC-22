@@ -1,4 +1,4 @@
-with open('data/input10.txt') as f:
+with open('data/2022/input10.txt') as f:
     content = [line.strip().split(" ") for line in f.readlines()]
 
 sum = 0

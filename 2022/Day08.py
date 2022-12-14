@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 ### read file ###
 #################
 
-with open('data/input8.txt') as f:
+with open('data/2022/input8.txt') as f:
     content = f.readlines()
 
 

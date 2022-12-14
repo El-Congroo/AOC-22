@@ -2,9 +2,6 @@ import java.util.List;
 
 public class Day04 {
 
-
-
-
     private static int getScore(List<String> list) {
         int ret = 0;
 

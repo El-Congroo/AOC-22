@@ -4,7 +4,7 @@ import numpy as np
 ### set basic data ###
 ######################
 
-with open('data/input14.txt') as f:
+with open('data/2022/input14.txt') as f:
     content = [[[int(d) for d in c.split(',')] for c in b] for b in [a.strip().split('->') for a in f.readlines()]]
 
 
@@ -60,7 +60,6 @@ def setGroundCave(content):
         a = [i for _ in range(widthCave+2)]
         cave.append(a)
     
-        
     return cave
 
 

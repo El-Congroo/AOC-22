@@ -5,7 +5,7 @@ import copy as cp
 #################
 
 #read file
-with open('data/input5.txt') as f:
+with open('data/2022/input5.txt') as f:
     content = f.readlines()
 
 #format towers

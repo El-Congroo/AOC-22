@@ -1,7 +1,7 @@
 import numpy as np
 
 
-with open('data/input9.txt') as f:
+with open('data/2022/input9.txt') as f:
     content = [line.strip().split(" ") for line in f.readlines()]
 
 

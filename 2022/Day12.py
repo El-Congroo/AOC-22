@@ -1,5 +1,5 @@
 # open test data
-with open('data/input12.txt') as f:
+with open('data/2022/input12.txt') as f:
     grid = [[ord(c)-97 for c in line.strip()] for line in f.readlines()]
 
 #################
