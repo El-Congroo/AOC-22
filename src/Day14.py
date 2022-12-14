@@ -4,7 +4,7 @@ import numpy as np
 ### set basic data ###
 ######################
 
-with open('data/sample.txt') as f:
+with open('data/input14.txt') as f:
     content = [[[int(d) for d in c.split(',')] for c in b] for b in [a.strip().split('->') for a in f.readlines()]]
 
 
@@ -88,7 +88,7 @@ def sand2Ground(cave, route, void):
 
 
 def canFall(cave, pos, void):
-    if(void and (pos[1] == 0 or pos[1] == len(cave)-1 ) or cave[pos[0]][pos[1]] == 2):
+    if(void and (pos[1] == 0 or pos[1] == len(cave)-1 ) or pos[0] == len(cave)-1 or cave[pos[0]][pos[1]] == 2):
         return -1
 
     for i in [0, -1, 1]:
