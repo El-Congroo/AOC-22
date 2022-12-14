@@ -7,6 +7,7 @@ import numpy as np
 with open('data/input14.txt') as f:
     content = [[[int(d) for d in c.split(',')] for c in b] for b in [a.strip().split('->') for a in f.readlines()]]
 
+
 heightCave = 0
 xSpan = [100000, 0]
 
@@ -85,7 +86,6 @@ def sand2Ground(cave, route):
 
 def canFall(cave, pos):
     if(cave[pos[0]][pos[1]] == 2):
-        print(pos[0], pos[1])
         return -1
 
     for i in [0, -1, 1]:
@@ -120,10 +120,10 @@ def draw(cave):
 def makeItRain(cave):
     while True:
         if not sand2Ground(cave, False):
+
             break
 
     sand2Ground(cave, True)
-    draw(cave)
 
 def countRestingSand(cave):
     restingSand = 0
@@ -135,7 +135,7 @@ def countRestingSand(cave):
     
     return restingSand
 
-def countRestingVoidSand(cave):
+def countRestingSandGround(cave):
     
     a, b = 0, 0
     for i in range(len(cave)-2, 0, -1):
@@ -152,6 +152,8 @@ def countRestingVoidSand(cave):
 ##############
 
 # cave = setVoidCave(content)
+
+
 # makeItRain(cave)
 
 # print("there is so much sand:", countRestingSand(cave))
@@ -165,4 +167,8 @@ cave = setGroundCave(content)
 
 makeItRain(cave)
 
-print("there is even more of so much sand:", countRestingVoidSand(cave))
+if countRestingSandGround(cave) != 30367:
+    print("FEHLER!!!")
+
+
+# print("there is even more of so much sand:", countRestingSandGround(cave))

@@ -1,5 +1,6 @@
 import copy as cp
 import numpy as np
+import matplotlib.pyplot as plt
 
 #################
 ### read file ###
@@ -76,3 +77,12 @@ for row in visible:
 
 print("Result task one: ", count)
 print ("Result of the second tastk: ", np.max(estate_value))
+
+estate_value = np.array(estate_value)
+
+
+
+print(f"total number of visible trees: {count}\n highest scenic score: {np.max(estate_value)} [{100},{100}]")
+plt.imshow(estate_value, cmap="viridis", interpolation="bilinear", norm="log")
+plt.title("tree's scenic scores")
+plt.show()
