@@ -1,10 +1,10 @@
 import numpy as np
 
-#################
-### read data ###
-#################
+######################
+### set basic data ###
+######################
 
-with open('data/input14.txt') as f:
+with open('data/sample.txt') as f:
     content = [[[int(d) for d in c.split(',')] for c in b] for b in [a.strip().split('->') for a in f.readlines()]]
 
 
@@ -20,11 +20,13 @@ widthCave = xSpan[1] - xSpan[0] + 1
 heightCave += 1
 
 caveData = [widthCave, heightCave, xSpan[0]]
+startPos = [0, 500-xSpan[0]]
 
 
 ################
 ### set cave ###
 ################
+
 def setVoidCave(content):
     cave = [[0 for _ in range(widthCave)] for _ in range(heightCave)]
 
@@ -44,12 +46,11 @@ def setVoidCave(content):
                 cave[yStart + y*np.sign(heightDif)][xStart] = 1
     return cave
 
-
-
 def setGroundCave(content):
     cave = setVoidCave(content)
 
     xSpan[0] -= 2
+    startPos[1] += 1
 
     for line in cave:
         line.insert(0, 0)
@@ -63,15 +64,17 @@ def setGroundCave(content):
     return cave
 
 
+
 ######################
 ### cave functions ###
 ######################
 
-def sand2Ground(cave, route):
-    pos = [0, 500-xSpan[0]-1]
+
+def sand2Ground(cave, route, void):
+    pos = startPos.copy()
 
     while True:
-        newPos = canFall(cave, pos)
+        newPos = canFall(cave, pos, void)
         if isinstance(newPos, list):
             pos = newPos
             if route:
@@ -84,8 +87,8 @@ def sand2Ground(cave, route):
                 return True
 
 
-def canFall(cave, pos):
-    if(cave[pos[0]][pos[1]] == 2):
+def canFall(cave, pos, void):
+    if(void and (pos[1] == 0 or pos[1] == len(cave)-1 ) or cave[pos[0]][pos[1]] == 2):
         return -1
 
     for i in [0, -1, 1]:
@@ -117,13 +120,14 @@ def draw(cave):
     print('')
 
 
-def makeItRain(cave):
+def makeItRain(cave, void):
     while True:
-        if not sand2Ground(cave, False):
-
+        if not sand2Ground(cave, False, void):
             break
 
-    sand2Ground(cave, True)
+    sand2Ground(cave, True, void)
+    draw(cave)
+
 
 def countRestingSand(cave):
     restingSand = 0
@@ -136,7 +140,6 @@ def countRestingSand(cave):
     return restingSand
 
 def countRestingSandGround(cave):
-    
     a, b = 0, 0
     for i in range(len(cave)-2, 0, -1):
         if cave[i][0] == 0 and a == 0:
@@ -151,12 +154,11 @@ def countRestingSandGround(cave):
 ### Part 1 ###
 ##############
 
-# cave = setVoidCave(content)
+cave = setVoidCave(content)
 
+makeItRain(cave, True)
 
-# makeItRain(cave)
-
-# print("there is so much sand:", countRestingSand(cave))
+print("there is so much sand:", countRestingSand(cave))
 
 
 ##############
@@ -165,10 +167,6 @@ def countRestingSandGround(cave):
 
 cave = setGroundCave(content)
 
-makeItRain(cave)
+makeItRain(cave, False)
 
-if countRestingSandGround(cave) != 30367:
-    print("FEHLER!!!")
-
-
-# print("there is even more of so much sand:", countRestingSandGround(cave))
+print("there is even more of so much sand:", countRestingSandGround(cave))
