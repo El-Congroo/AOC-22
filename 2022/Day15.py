@@ -1,0 +1,82 @@
+import re
+
+def readData():
+    with open('data/2022/input15.txt') as f:
+        return [[int(b) for b in re.findall(r'-?[0-9]+', a)] for a in f.readlines()]
+    
+def getDistance(coords):
+    return abs(coords[0]-coords[2])+abs(coords[1]-coords[3])
+
+def getBeacons(data):
+    positions = set()
+    for coords in data:
+        positions.add(coords[2]+ coords[3] * 1j)
+    return positions
+
+
+def getPossiblePos(coords):
+    positions = set()
+    x1, y1, x2, y2 = coords
+    distance = getDistance(coords)
+    for y in range(y1-distance, y1+distance+1):
+        difference = max(y1 - y, y - y1)
+        for x in range(x1-distance+difference, x1+distance-difference+1):
+            positions.add(x + y * 1j)
+    return positions
+
+def getSetOfAllPos(data):
+    allPositions = set()
+    for coords in data:
+        allPositions = allPositions.union(getPossiblePos(coords))
+    return allPositions
+
+def getElementsInLine(coords, line):
+    positions = set()
+    size = getDistance(coords)
+    difCenter2Line = abs(coords[1] - line)
+    if size < difCenter2Line: 
+        return set()
+    difLine2Edge = size - difCenter2Line
+
+    for x in range(coords[0]-difLine2Edge, coords[0]+difLine2Edge+1):
+        positions.add(x + line * 1j)
+    return positions
+
+
+def getAllElementsInLine(data, line):
+    allPositions = set()
+    for coords in data:
+        allPositions = allPositions.union(getElementsInLine(coords, line))
+    return allPositions
+
+
+def getOuterEdgeElements(coords):
+    positions = set()
+    difOuterEdge = getDistance(coords) + 1
+    for y in range(coords[1]-difOuterEdge, coords[1]+difOuterEdge+1):
+        for x in [positions[0]-difOuterEdge, positions[0]+difOuterEdge]:
+            if (x >= 0 and x <= 4000000 and y >= 0 and y <= 4000000):
+                positions.add(x + y * 1j)
+    return positions
+
+def getNbrOfElementsInLine(set, line):
+    return len([x for x in set if x.imag == line])
+
+def removeBeacons(allPos, data):
+    return allPos.difference(getBeacons(data))
+
+def task1():
+
+    lineNr = 2000000
+    data = readData()
+    elementsInLine = getAllElementsInLine(data, lineNr)
+    blockedPos = removeBeacons(elementsInLine, data)
+    nbr = getNbrOfElementsInLine(blockedPos, lineNr)
+    print("in Line", lineNr, "are", nbr, "blocked positions")
+
+def task2():
+    print("Die genaue Programmierung wird wegen trivialität dem Leser überlassen")
+    
+
+
+task2()
