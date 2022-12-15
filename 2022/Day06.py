@@ -1,4 +1,4 @@
-with open('data/2022/input6.txt') as f:
+with open('data/input6.txt') as f:
     content = f.readlines()
 
 data = content[0]
