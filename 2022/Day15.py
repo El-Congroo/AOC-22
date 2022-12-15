@@ -98,9 +98,11 @@ def task1():
     nbr = getNbrOfElementsInLine(blockedPos, lineNr)
     print("in Line", lineNr, "are", nbr, "blocked positions")
 
+
+
+
 def task2():
     border = 4_000_000
-    # border = 20
     data = readData()
     x, y = getFreeXY(data, border)
     print(f"The tuning frequency of the Beacon {x,y} is {getTuningFreq(x, y)}")

@@ -2,9 +2,6 @@ import java.util.List;
 
 public class Day02 {
 
-   
-
-
     private static int getScore(List<String> allLines) {
         int scoreSum = 0;
         for(String line : allLines) {
