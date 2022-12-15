@@ -41,7 +41,7 @@ class Monkey:
 
 
 
-with open('data/2022/input11.txt') as f:
+with open('data/input11.txt') as f:
     content = [line.strip().replace(' ', '') for line in f.readlines()]
 
 

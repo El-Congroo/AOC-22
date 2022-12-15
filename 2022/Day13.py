@@ -5,7 +5,7 @@ import ast
 #################
 
 
-with open('data/2022/input13.txt') as f:
+with open('data/input13.txt') as f:
     lists = [line.strip() for line in f.readlines()]
 
 while '' in lists:
