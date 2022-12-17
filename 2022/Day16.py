@@ -1,5 +1,5 @@
 import re
-import copy
+import numpy as np
 
 #################
 ### read file ###
@@ -18,21 +18,13 @@ def readData():
 ##############
 
 dynamic = {}
+nodesBigger0 = []
 
 
-def getNextTunnels(node, content):
+def getNextNodes(node, content):
     for line in content:
         if line[0][0] == node:
             return line[1]
-
-
-def countValvesWithRate(content):
-    count = 0
-    for line in content:
-        if line[0][1] > 0:
-            count += 1
-    
-    return count
 
 
 def getPressure(node, content):
@@ -40,11 +32,21 @@ def getPressure(node, content):
         if line[0][0] == node:
             return line[0][1]
 
+def setListOfNodesRateBigger0(content):
+    ret = []
+    for line in content:
+        if line[0][1] > 0:
+            ret += [line[0][0]]
+    global nodesBigger0 
+    nodesBigger0 = ret
+    
 
 def getState(content):
     key = 0
-    for line in content:
-        key += line[0][1]
+    for node in nodesBigger0:
+        key *= 2
+        if getPressure(node, content) > 0:
+            key +=1
     return key
 
 
@@ -81,19 +83,27 @@ def getMaxPressure(node, content, minutesLeft):
 
     maxRelease = 0
 
+    """
     # open and walk
     if thisPressure > 0:
         setPressure(node, content, 0)
-        thisPressure *= minutesLeft-1
-        for next in getNextTunnels(node, content):
+        for next in getNextNodes(node, content):
             maxRelease = max(getMaxPressure(next, content, minutesLeft-2), maxRelease)
 
-        maxRelease += thisPressure * (minutesLeft -1)
+        maxRelease += thisPressure * (minutesLeft-1)
         setPressure(node, content, thisPressure)
 
     # just walk
-    for next in getNextTunnels(node, content):
+    for next in getNextNodes(node, content):
         maxRelease = max(getMaxPressure(next, content, minutesLeft-1), maxRelease)
+    """
+
+    setPressure(node, content, 0)
+    for next in getNextNodes(node, content):
+        maxRelease = max(getMaxPressure(next, content, minutesLeft -1 -np.sign(thisPressure)), maxRelease)
+    maxRelease += thisPressure * (minutesLeft-1)
+    setPressure(node, content, thisPressure)
+
 
     setDyn(content, minutesLeft, node, maxRelease)
     return getDyn(content, minutesLeft, node)
@@ -102,6 +112,7 @@ def getMaxPressure(node, content, minutesLeft):
 
 def part1(content):
     minutes = 30
+    setListOfNodesRateBigger0(content)
     val = getMaxPressure(content[0][0][0], content, minutes)
     print("maxPressure:", val)
 
