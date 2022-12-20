@@ -6,15 +6,16 @@ rocks = [{0, 1, 2, 3},
 rocksDim = [4 + 1j, 3 + 3j, 3 + 3j, 1 + 4j, 2 + 2j]
 
 width = 7
-nrUnitsTat = 1_000_000_000_000
+nrUnitsTat = 1000000000000
 nrUnits = nrUnitsTat
 sigSize = 40
+file = "input17"
 # del_every = 300
 
 
-def draw(title, tower, movedRock):
+def draw(title, tower, movedRock, height):
     print(title, ":")
-    for y in range(10, -1, -1):
+    for y in range(height+5, max(-1, height-5), -1):
         for x in range(width):
             if x + y * 1j in tower:
                 print("#", end="")
@@ -58,19 +59,19 @@ def move(content, rockPos, rockId, j):
 
 
 def maxHeight(height, rockPos):
-    return max(height, rockPos.imag)
+    return max(height, int(rockPos.imag))
 
 
 def readData():
-    with open('data/sample.txt') as f:
+    with open(f'2022/data/{file}.txt') as f:
         return [[int(y.replace("<", "-1").replace(">", "1")) for y in x.strip()] for x in f.readlines()][0]
 
 
 def isOverlapping(rockPos, rockId, tower):
-    for i in getRockList(rockPos, rockId):
+    for i in getRockSet(rockPos, rockId):
         if i in tower:
             return True
-        return False
+    return False
     # return not isNotOverlapping(rockPos, rockId, tower)
 
 
@@ -96,7 +97,7 @@ def getSignature(tower, height):
 
 def partOne():
     content = readData()
-    tower, beforeBlock, testSet = set(), set(), set()
+    tower, beforeBlock = set(), set()
     height, added, i, ptr = 0, 0, 0, 0
     seen = {}
 
@@ -119,8 +120,9 @@ def partOne():
 
             if onGround(movedRockPos):
                 break
-
+            
             rockPos = fall(movedRockPos)
+            draw(f"Stein {i} fell", tower, getRockSet(movedRockPos, rockId), int(movedRockPos.imag))
 
         tower = tower.union(getRockSet(movedRockPos, rockId))
         height = maxHeight(height, movedRockPos + rocksDim[rockId])
@@ -146,6 +148,7 @@ def partOne():
 
         i += 1
 
+    print("Height: ", height, "added: ", added)
     return height + added
 
 
@@ -159,7 +162,6 @@ def main():
     stats = pstats.Stats(pr)
     stats.sort_stats(pstats.SortKey.TIME)
     stats.dump_stats(filename='needs_profiling.prof')
-
 
 if __name__ == "__main__":
     main()
