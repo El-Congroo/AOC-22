@@ -4,7 +4,7 @@ import numpy as np
 ### set basic data ###
 ######################
 
-with open('data/input14.txt') as f:
+with open('2022/data/input14.txt') as f:
     content = [[[int(d) for d in c.split(',')] for c in b] for b in [a.strip().split('->') for a in f.readlines()]]
 
 
@@ -107,13 +107,13 @@ def draw(cave):
         for element in line:
             match element:
                 case 0:
-                    print('.', end='')
+                    print(' ', end='')
                 case 1:
-                    print('#', end='')
+                    print(chr(9619), end='')
                 case 2: 
-                    print('+', end='')
+                    print(chr(9617), end='')
                 case 3:
-                    print('~', end='')
+                    print(chr(9618), end='')
         print('')
 
     print('')

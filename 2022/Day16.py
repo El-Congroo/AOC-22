@@ -1,12 +1,12 @@
 import re
-
+import numpy as np
 
 #################
 ### read file ###
 #################
 
 def readData():
-    with open('data/input16.txt') as f:
+    with open('2022/data/sample.txt') as f:
         content = [[b for b in a.replace(",", "").strip().split("to valv")] for a in f.readlines()]
         for line in content:
             line[0] = [line[0].split(" ")[1], int(re.findall(r'-?[0-9]+', line[0])[0])]
@@ -97,15 +97,15 @@ def getMaxPressure(node, content, minutesLeft):
     # just walk
     for next in getNextNodes(node, content):
         maxRelease = max(getMaxPressure(next, content, minutesLeft - 1), maxRelease)
-    """
 
+    """
     setPressure(node, content, 0)
     for next in getNextNodes(node, content):
         maxRelease = max(getMaxPressure(next, content, minutesLeft -1 -np.sign(thisPressure)), maxRelease)
     maxRelease += thisPressure * (minutesLeft-1)
     setPressure(node, content, thisPressure)
     """
-
+    
     setDyn(content, minutesLeft, node, maxRelease)
     return getDyn(content, minutesLeft, node)
 
@@ -114,7 +114,7 @@ def part1(content):
     minutes = 30
     setListOfNodesRateBigger0(content)
     val = getMaxPressure(content[0][0][0], content, minutes)
-    print("maxPressure:", val)
+    return val
 
 
 def main():
@@ -122,7 +122,7 @@ def main():
     import pstats
 
     with cProfile.Profile() as pr:
-        print("Elements", "So the height is:", part1(readData()))
+        print("maxPressure is", part1(readData()))
 
     stats = pstats.Stats(pr)
     stats.sort_stats(pstats.SortKey.TIME)
