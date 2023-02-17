@@ -6,7 +6,7 @@ import numpy as np
 #################
 
 def readData():
-    with open('2022/data/sample.txt') as f:
+    with open('2022/data/input16.txt') as f:
         content = [[b for b in a.replace(",", "").strip().split("to valv")] for a in f.readlines()]
         for line in content:
             line[0] = [line[0].split(" ")[1], int(re.findall(r'-?[0-9]+', line[0])[0])]

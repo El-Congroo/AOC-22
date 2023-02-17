@@ -2,7 +2,7 @@ import re
 from z3 import *
 
 def readData():
-    with open('data/input15.txt') as f:
+    with open('2022/data/input15.txt') as f:
         return [[int(b) for b in re.findall(r'-?[0-9]+', a)] for a in f.readlines()]
 
 
