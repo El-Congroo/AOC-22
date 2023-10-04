@@ -2,7 +2,7 @@
 
 CFLAGS = -Wall -Werror
 CC = gcc
-DAY = 01
+DAY = 03
 SRCDIR = Day$(DAY)
 TARGET = Day$(DAY)
 

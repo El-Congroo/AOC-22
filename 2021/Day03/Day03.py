@@ -6,7 +6,7 @@ import math
 ###################
 
 def getContent():
-    with open('data/2021/input03.txt') as f:
+    with open('data/input03.txt') as f:
         return [[int(a) for a in b.strip()] for b in f.readlines()]
 
 
@@ -56,6 +56,8 @@ def getCo2():
     return binListList2Dec(co2)
 
 def part2():
+    print("Oxy:", getOxy())
+    print("Co2", getCo2())
     return getOxy() * getCo2()
 
 
