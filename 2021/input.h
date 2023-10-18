@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXLINELENGTH 256
+#define MAXLINELENGTH 512
 
 char **readInput(char *filePath, int *len);
 
