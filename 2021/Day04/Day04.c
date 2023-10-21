@@ -6,11 +6,12 @@
 // -------------------------------------- //
 
 int check4CrashLanding(int ***planes, int fleetCnt);
-int findNearestIsland(int **plane);
+int findNearestIsland(int ***plane);
 int ***boarding(char **boardingPass, int const waitingPassengers);
 void strike(int **boardPass, int passengerNbr);
+int check4NoCrashLanding(int ***planes, int fleetCnt, int *leftBoards);
 
-int main(int argc, char **argv)
+    int main(int argc, char **argv)
 {
     // ---------- //
     // read input //
@@ -36,7 +37,7 @@ int main(int argc, char **argv)
         drawOrder[i] = atoi(strtok(NULL, ","));
 
     // calculate number of boards
-    int boardCnt = (len - 2) / (BOARDSIZE + 1);
+    const int boardCnt = (len - 2) / (BOARDSIZE + 1);
 
     // malloc boards as fast as my bus 298 (O(n^3))
     int ***boards = boarding(input, boardCnt);
@@ -48,16 +49,25 @@ int main(int argc, char **argv)
         for (int i = 0; i < boardCnt; i++)
             strike(boards[i], drawOrder[curDraw]);
         curDraw++;
-    } while ((sum = check4CrashLanding(boards, boardCnt)) == 0);
-
-    result = drawOrder[--curDraw] * sum;
+    } while (!(sum = check4CrashLanding(boards, boardCnt)));
+    result = drawOrder[curDraw - 1] * sum;
 
     printf("Part 1: %d\n", result);
 
-    // -------- //
-    // part two //
-    // -------- //
-    result = 0;
+    // ------------------- //
+    // part two - segfault//
+    // ------------------- //
+    int leftBoards = boardCnt-1;
+    while (leftBoards)
+    {
+        for (int i = 0; i < boardCnt; i++)
+            if(!boards[i])
+                strike(boards[i], drawOrder[curDraw]);
+        curDraw++;
+        sum = check4NoCrashLanding(boards, boardCnt, &leftBoards);
+    } 
+
+    result = sum * drawOrder[curDraw - 1];
 
     printf("Part 2: %d\n", result);
 }
@@ -66,6 +76,7 @@ int check4CrashLanding(int ***planes, int fleetCnt)
 {
     for (int plane = 0; plane < fleetCnt; plane -= -1)
     {
+
         // is there a line full of shit
         for (int i = 0; i < BOARDSIZE; i++)
         {
@@ -75,7 +86,7 @@ int check4CrashLanding(int ***planes, int fleetCnt)
                 tmp += planes[plane][i][j];
             }
             if (tmp == -5)
-                return findNearestIsland(planes[plane]);
+                return findNearestIsland(&planes[plane]);
         }
         for (int i = 0; i < BOARDSIZE; i++)
         {
@@ -85,7 +96,7 @@ int check4CrashLanding(int ***planes, int fleetCnt)
                 tmp += planes[plane][j][i];
             }
             if (tmp == -5)
-                return findNearestIsland(planes[plane]);
+                return findNearestIsland(&planes[plane]);
         }
         int tmp = 0, tmp2 = 0;
         for (int i = 0; i < BOARDSIZE; i++)
@@ -94,18 +105,57 @@ int check4CrashLanding(int ***planes, int fleetCnt)
             tmp2 += planes[plane][i][BOARDSIZE - i - 1];
         }
         if (tmp == -5 || tmp2 == -5)
-            return findNearestIsland(planes[plane]);
+            return findNearestIsland(&planes[plane]);
     }
     return 0;
 }
 
-int findNearestIsland(int **plane)
+int check4NoCrashLanding(int ***planes, int fleetCnt, int *leftBoards)
+{
+    for (int plane = 0; plane < fleetCnt; plane++)
+    {
+        if (!planes[plane])
+            continue;
+        // check for horizontal or vertical bingos
+        int tmpX, tmpY;
+        for (int i = 0; i < BOARDSIZE; i++)
+        {
+            tmpX = 0, tmpY = 0;
+
+            for (int j = 0; j < BOARDSIZE; j++)
+            {
+                tmpX += planes[plane][i][j];
+                tmpY += planes[plane][j][i];
+            }
+
+            if (tmpX == -5 || tmpY == -5) {
+                (*leftBoards)--;
+                return findNearestIsland(&planes[plane]);
+            }
+        }
+
+        // check for diagonal bingos
+        tmpX = 0, tmpY=0;
+        for (int i = 0; i < BOARDSIZE; i++)
+        {
+            tmpX += planes[plane][i][i];
+            tmpY += planes[plane][i][BOARDSIZE - i - 1];
+        }
+        if (tmpX == -5 || tmpY == -5) {
+            (*leftBoards)--;
+            return findNearestIsland(&planes[plane]);
+        }
+    }
+    return 0;
+}
+
+int findNearestIsland(int ***plane)
 {
     int sum = 0;
     for (int i = 0; i < BOARDSIZE; i++)
         for (int j = 0; j < BOARDSIZE; j++)
-            sum += plane[i][j] != -1 ? plane[i][j] : 0;
-
+            sum += *plane[i][j] != -1 ? *plane[i][j] : 0;
+    *plane = NULL;
     return sum;
 }
 

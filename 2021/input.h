@@ -7,5 +7,6 @@
 #define MAXLINELENGTH 512
 
 char **readInput(char *filePath, int *len);
+void die(char *msg);
 
 #endif 
