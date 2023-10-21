@@ -25,7 +25,7 @@ int main(int argc, char **argv)
         if (!coords[i])
             die("calloc");
 
-        // read data in array
+        // put data in array
         coords[i][0] = atoi(strtok(input[i], ", ->"));
         for (int j = 1; j < 4; j++)
             coords[i][j] = atoi(strtok(NULL, ", ->"));
@@ -33,11 +33,11 @@ int main(int argc, char **argv)
         // switch coordinates if higher value is right
         for (int j = 0; j < 2; j++)
             if (coords[i][j] > coords[i][j + 2])
-            {
-                int tmp = coords[i][j];
-                coords[i][j] = coords[i][j + 2];
-                coords[i][j + 2] = tmp;
-            }
+                for(int k=0; k<2; k++) {
+                    int tmp = coords[i][k];
+                    coords[i][k] = coords[i][k + 2];
+                    coords[i][k + 2] = tmp;
+                }
 
         // save the maximum x and y coordinates
         for (int j = 0; j < 2; j++)
@@ -74,7 +74,28 @@ int main(int argc, char **argv)
     // -------- //
     // part two //
     // -------- //
+
+    for (int i = 0; i < len; i++)
+    {
+        // skip non diagonal lines
+        if (!((coords[i][0] - coords[i][2]) * (coords[i][1] - coords[i][3])))
+            continue;
+
+        int x = coords[i][0];
+        for (int y = coords[i][1]; y <= coords[i][3]; y++) {
+                canvas[x + y * dim[0]] += 1;
+                x += coords[i][0] < coords[i][2] ? 1 : -1;
+        }
+    }
+
+
+    // count points where at least two lines overlap
     result = 0;
+    for (int i = 0; i < dim[0] * dim[1]; i++)
+        if (canvas[i] > 1)
+            result++;
+
+        
 
     printf("Part 2: %d\n", result);
 }
