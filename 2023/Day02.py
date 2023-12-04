@@ -17,8 +17,6 @@ class Game:
     def __init__(self, line):
         self.id = int(re.findall(r'\d+', line)[0])
         self.sets = []
-
-        # read data into sets
         for round in line.split(";"):
             balls = re.findall(r'\d+ [r|g|b]', round)
             ballList = [0 for _ in range(3)]
