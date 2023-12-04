@@ -2,7 +2,7 @@
 
 Here are my solutions for the Advent of Code puzzles.
 ## 2023
-### 🎄🎄🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲
+### 🎄🎄🎄🎄🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲🌲
 Delayed start. Quite busy with my studies rn. I wonder when the amout of time needed to solve the puzzles will get out of hand and I have to admit defeat.
 ## 2022
 ### 🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🎄🌲🌲🎄🌲🌲🌲🌲🌲
