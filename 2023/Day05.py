@@ -1,38 +1,54 @@
 import re
 
-with open('2023/data/input05.txt') as f:
-    content = [line for line in f.readlines()]
+with open('2023/data/example.txt') as f:
+    content = [line.strip() for line in f.readlines()]
 
-seeds = [int(x) for x in re.findall(r'\d+', content[0])]
+# print(content)
+
+startranges = [int(x) for x in re.findall(r'\d+', content[0])]
+startranges = [range(x, x+y) for x, y in zip(startranges[::2], startranges[1::2])]
+
+def intersect(r1, r2):
+    return range(max(r1.start,r2.start), min(r1.stop,r2.stop)) or None
+
+def difference(r1, r2):
+    return range(r1.start, r2.start), range(r1.stop, r2.stop)
+
+def setOff(r, offset):
+    return range(r.start + offset, r.stop + offset)
 
 # get all maps
 maps = []
-cur = []
+map = []
 for line in content[3:]:
 
-    if line == '\n':
-        maps.append(cur)
-        cur = []
+    if len(line) == 0:
+        maps.append(map)
+        map = []
         continue
-    
-    if line[-2:-1] == ':':
+    if line[-1] == ":":
         continue
 
-    numbers = [int(x) for x in re.findall(r'\d+', line)]
-    start = range(numbers[1], numbers[1]+numbers[2])
-    offset = numbers[0] - numbers[1]
-    cur.append((start, offset))
-maps.append(cur)
+    dest, src, off = [int(x) for x in re.findall(r'\d+', line)]
+    convertrange = range(src, src+off)
+    offset = dest - src
+    map.append((convertrange, offset))
+maps.append(map)
 
-locations = []
-for seed in seeds:
-    for map in maps:
-        for convert in map:
-            if seed in convert[0]:
-                seed += convert[1]
+
+
+seedranges = startranges
+for map in maps:
+    nextranges = []
+    while len(seedranges) > 0:
+        seedrange = seedranges.pop(0)
+        for convertrange, offset in map:
+            inters = intersect(seedrange, convertrange)
+            if inters != None:
+                seedranges += difference(seedrange, convertrange)
+                nextranges.append(setOff(inters, offset))
                 break
-    locations.append(seed)
+    # merge nextranges
+    seedranges = nextranges
 
-print(min(locations))
-
-            
+print("min:", min([x.start for x in seedranges]))
