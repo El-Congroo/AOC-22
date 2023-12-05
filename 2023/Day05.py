@@ -1,23 +1,28 @@
 import re
 
-with open('2023/data/example.txt') as f:
+with open('2023/data/input05.txt') as f:
     content = [line.strip() for line in f.readlines()]
 
-# print(content)
-
 startranges = [int(x) for x in re.findall(r'\d+', content[0])]
-startranges = [range(x, x+y) for x, y in zip(startranges[::2], startranges[1::2])]
+startranges = [(x, x+y) for x, y in zip(startranges[::2], startranges[1::2])]
 
 def intersect(r1, r2):
-    return range(max(r1.start,r2.start), min(r1.stop,r2.stop)) or None
+    if(r1[0] >= r2[1] or r1[1] <= r2[0]): return None
+    return (max(r1[0],r2[0]), min(r1[1],r2[1]))
 
 def difference(r1, r2):
-    return range(r1.start, r2.start), range(r1.stop, r2.stop)
+    if(r1[0] >= r2[1] or r1[1] <= r2[0]):
+        return [r1]
+    ret = []
+    if(r1[0] < r2[0]):
+        ret.append((r1[0], r2[0]))
+    if(r1[1] > r2[1]):
+        ret.append((r2[1], r1[1]))
+    return ret
 
 def setOff(r, offset):
-    return range(r.start + offset, r.stop + offset)
+    return (r[0] + offset, r[1] + offset)
 
-# get all maps
 maps = []
 map = []
 for line in content[3:]:
@@ -30,25 +35,25 @@ for line in content[3:]:
         continue
 
     dest, src, off = [int(x) for x in re.findall(r'\d+', line)]
-    convertrange = range(src, src+off)
+    convertRange = (src, src+off)
     offset = dest - src
-    map.append((convertrange, offset))
+    map.append((convertRange, offset))
 maps.append(map)
 
 
 
-seedranges = startranges
+curRanges = startranges
 for map in maps:
     nextranges = []
-    while len(seedranges) > 0:
-        seedrange = seedranges.pop(0)
-        for convertrange, offset in map:
-            inters = intersect(seedrange, convertrange)
+    for convertRange, offset in map:
+        for _ in range(len(curRanges)):
+            cur = curRanges.pop(0)
+            inters = intersect(cur, convertRange)
             if inters != None:
-                seedranges += difference(seedrange, convertrange)
+                curRanges += difference(cur, convertRange)
                 nextranges.append(setOff(inters, offset))
-                break
-    # merge nextranges
-    seedranges = nextranges
+            else:
+                curRanges.append(cur)
+    curRanges += nextranges
 
-print("min:", min([x.start for x in seedranges]))
+print("Part2:", min([x[0] for x in curRanges]))
