@@ -10,12 +10,10 @@ def getDistance(msHeldDown, msWhole):
     return msHeldDown * (msWhole - msHeldDown)
 
 def bbcnt(msWhole, bestDistace): # bigger best count
-    min = 0
     for i in range(msWhole+1):
         if getDistance(i, msWhole) > bestDistace:
-            min = i
-            break
-    return msWhole-min*2+1
+            return msWhole-i*2+1
+    
 
 prod1 = 1
 for time, bestD in numbers:
@@ -24,5 +22,4 @@ for time, bestD in numbers:
 time, bestD = number
 
 print("Part 1:", prod1)
-# print("return: ", bbcnt(30, 200))
 print("Part 2:", bbcnt(time, bestD))
