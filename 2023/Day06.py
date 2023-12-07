@@ -6,9 +6,6 @@ with open('2023/data/input06.txt') as f:
 numbers = [(int(x),int(y)) for x, y in zip(content[0], content[1])]
 number = [int(''.join(x)) for x in content]
 
-def getDistance(msHeldDown, msWhole):
-    return msHeldDown * (msWhole - msHeldDown)
-
 def bbcnt(msWhole, bestDistace): # bigger best count
     x1 =  int(-((msWhole**2 - 4 * bestDistace)**(1/2) - msWhole) / 2) + 1
     return msWhole-x1*2+1
