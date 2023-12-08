@@ -14,3 +14,24 @@ while cur != "ZZZ":
     cur = route[cur][direction[steps%len(direction)]]
     steps += 1
 print("Part One:", steps)
+
+
+def getGCD(x, y):
+   while(y):
+       x, y = y, x % y
+   return x
+
+def getLCM(x, y):
+   lcm = (x*y)//getGCD(x,y)
+   return lcm
+
+starts = [x for x in list(route) if x[-1] == "A"]
+retTwo = 1
+for cur in starts:
+    steps = 0
+    while cur[-1] != "Z":
+        cur = route[cur][direction[steps%len(direction)]]
+        steps += 1
+    retTwo = getLCM(retTwo, steps)
+
+print("PartTwo", retTwo)
