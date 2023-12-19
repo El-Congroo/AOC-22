@@ -35,5 +35,5 @@ for line in content[1:-1]:
             sumOne += int(match.group())
     i += 1
 
-print("Part One:", sumOne)
-print("Part Two:", sumTwo)
+print("Part one:", sumOne)
+print("Part two:", sumTwo)

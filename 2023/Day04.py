@@ -20,6 +20,6 @@ for line in content:
     i += 1
 
 
-print("Part One", sumOne)
-print("Part Two", sum(instances))
+print("Part one:", sumOne)
+print("Part two:", sum(instances))
 

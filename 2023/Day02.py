@@ -61,5 +61,5 @@ for line in content:
     
     
 
-print("part One", sumOne)
-print("part One", sumTwo)
+print("part one:", sumOne)
+print("part two:", sumTwo)

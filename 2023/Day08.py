@@ -13,7 +13,7 @@ steps = 0
 while cur != "ZZZ":
     cur = route[cur][direction[steps%len(direction)]]
     steps += 1
-print("Part One:", steps)
+print("Part one:", steps)
 
 
 def getGCD(x, y):
@@ -34,4 +34,4 @@ for cur in starts:
         steps += 1
     retTwo = getLCM(retTwo, steps)
 
-print("PartTwo", retTwo)
+print("Part two:", retTwo)

@@ -62,11 +62,11 @@ with open(inputData) as f:
     content = [(getRankValue(hand, labelsOne), hand, int(val)) for hand, val in [x.split(" ") for x in f.readlines()]]
 quickSort(content, 0, len(content)-1)
 
-print("Part one", getSum(content))
+print("Part one:", getSum(content))
 
 
 labelsTwo = list("AKQT98765432J")[::-1]
 with open(inputData) as f:
     content = [(getRankValue(y, labelsTwo), y, int(z)) for y, z in [x.split(" ") for x in f.readlines()]]
 quickSort(content, 0, len(content)-1)
-print("Part two", getSum(content))
+print("Part two:", getSum(content))

@@ -25,8 +25,6 @@ possible = {
     "S": [n, e, s, w]
 }
 
-
-
 DY = len(content)
 DX = len(content[0])
 

@@ -16,5 +16,5 @@ for time, bestD in numbers:
 
 time, bestD = number
 
-print("Part 1:", prod1)
-print("Part 2:", bbcnt(time, bestD))
+print("Part one", prod1)
+print("Part two", bbcnt(time, bestD))

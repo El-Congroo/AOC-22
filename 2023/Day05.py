@@ -33,7 +33,7 @@ for seed in seeds:
                 break
     locations.append(seed)
 
-print("Part One", min(locations))
+print("Part one:", min(locations))
 
 ################
 ### Part two ###
@@ -66,4 +66,4 @@ for map in maps:                                            # iterate over all .
                 curRanges.append(cur)                       # if they don't overlap with the current map range. Maybe with the next one
     curRanges += nextranges                                 # when the next ...-to-... map comes, it's time to add the moved seeds
 
-print("Part2:", min([x[0] for x in curRanges]))
+print("Part two:", min([x[0] for x in curRanges]))
