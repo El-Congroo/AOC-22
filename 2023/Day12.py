@@ -1,17 +1,26 @@
 with open('2023/data/input12.txt') as f:
     content = [line.strip().split() for line in f.readlines()]
 
+cache = {}
 
 def getArrCnt(condition, numbers):
-    if numbers == []: return 1 if "#" not in condition else 0
-    if condition == "": return 0
+    if len(numbers) == 0: return 1 if "#" not in condition else 0
+    if len(condition) == 0: return 0
+
+    if key := (condition, numbers) in cache: return cache[key]
 
     ret, n = 0, numbers[0]
-    for i in range(len(condition) - n + 1):
-        if (i != 0 and condition[i-1] == "#"): break
-        if "." not in condition[i:i+n] and (i+n == len(condition) or condition[i+n] != "#"):
-            ret += getArrCnt(condition[i+n+1:], numbers[1:])
+
+    if condition[0] in ".?":
+        ret += getArrCnt(condition[1:], numbers)
+        
+    if condition[0] in "#?":
+        if n <= len(condition) and "." not in condition[:n] and (n == len(condition) or condition[n] != "#"):
+            ret += getArrCnt(condition[n+1:], numbers[1:])
+        
+    cache[key] = ret
     return ret
 
 
-print("Part one:", sum(getArrCnt(condition, [int(n) for n in numbers.split(",")]) for condition, numbers in content))
+print("Part one:", sum(getArrCnt(condition, tuple(map(int, numbers.split(",")))) for condition, numbers in content))
+print("Part two:", sum(getArrCnt("?".join([condition]*5), tuple(map(int, numbers.split(",")))*5) for condition, numbers in content))
