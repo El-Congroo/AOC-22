@@ -8,7 +8,9 @@ def countColumn(column : str) -> int:
         split = len(column)
     
     n, m = len(column), column.count("O", 0, split)
-    return  int(m/2 * (2*n -(m-1))) + countColumn(column[split+1:])
+    
+    # sum = (a_1 + a_n)/2 * n; a_n = a_1-(m-1)
+    return  int(m/2 * (2*n - (m-1))) + countColumn(column[split+1:])
     
     
 def countTiltedNorth(platform):
