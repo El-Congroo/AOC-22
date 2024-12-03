@@ -1,30 +1,13 @@
 with open('2024/data/input02.txt') as f:
-    content = [[int(x) for x in line.strip().split(" ")] for line in f.readlines()]
+    c = [[int(x) for x in line.split(" ")] for line in f]
 
-partOne = 0
-partTwo = 0
+getDiff = lambda l: [a - b for a,b in zip(l[:-1], l[1:])]
+rmIdx = lambda l, d, m: (lambda i: l[:i] + l[i+1:])(d.index(m(d)))
+chkDiff = lambda d: (0 < min(d) <= max(d) <= 3) or (-3 <= min(d) <= max(d) < 0)
 
-getDiff = lambda line: [a - b for a,b in zip(line[:-1], line[1:])]
-checkVal = lambda mi, ma: (ma <= 3 and mi > 0) or (mi >= -3 and ma < 0)
-getMinMax = lambda diff: (min(diff), max(diff))
-checkDiff = lambda diff: checkVal(*getMinMax(diff))
-checkList = lambda list: checkDiff(getDiff(list))
+pt1 = pt2 = 0
+for l in c:
+    if chkDiff(d := getDiff(l)): pt1 += 1; pt2 += 1
+    elif any(chkDiff(getDiff(i)) for i in [rmIdx(l, d, max), rmIdx(l, d, min), l[:-1]]): pt2 += 1
 
-for line in content:
-    diff = getDiff(line)
-    if checkDiff(diff):
-        partOne += 1
-        partTwo += 1
-        continue
-    
-    mi, ma = getMinMax(diff)
-    mini, maxa, moxo = line[:], line[:], line[:-1]
-    
-    mini.pop(diff.index(mi))
-    maxa.pop(diff.index(ma))
-    
-    if checkList(maxa) or checkList(mini) or checkList(moxo):
-        partTwo += 1
-
-print("Part1:", partOne)
-print("Part2:", partTwo)
+[print(sol) for sol in [f"Part 1: {pt1}", f"Part 2: {pt2}"]]
