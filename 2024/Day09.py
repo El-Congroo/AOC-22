@@ -1,6 +1,7 @@
 with open('2024/data/input09.txt') as f:
     content = [int(y) for x in f for y in x.strip()]
 
+
 ################
 ### part one ###
 ################
@@ -30,6 +31,7 @@ for x in content:
 
 print("Part 1:", sum1)
 
+
 ################
 ### part two ###
 ################
@@ -51,6 +53,5 @@ for b in blocks_reverse_not_empty_only:                 # go through all possibl
                 enumerated_blocks.insert(i, (None, free_space))
             enumerated_blocks.insert(i, b)              # "move" full block
             break
-
 
 print("Part 2:", sum((x if x != None else 0) * sum(range(i, i := i + j)) for x, j in enumerated_blocks))
